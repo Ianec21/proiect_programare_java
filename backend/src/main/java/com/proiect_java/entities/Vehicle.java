@@ -20,10 +20,10 @@ public class Vehicle {
     private String model;
     private int year;
     private String color;      // Ensure this is in camelCase
-    private double engineSize;
+    private int engineSize;
     private String fuelType;   // Ensure this is in camelCase
-    private double torque;
-    private double trunkVolume;
-    private double price;
-    private double power;
+    private int torque;
+    private int trunkVolume;
+    private int price;
+    private int power;
 }

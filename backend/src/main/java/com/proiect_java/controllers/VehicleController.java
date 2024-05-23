@@ -24,4 +24,9 @@ public class VehicleController {
     public ResponseEntity<?> filterVehicles(@RequestBody Vehicle vehicle) {
         return vehicleService.filterVehicles(vehicle.getBrand(), vehicle.getColor(), vehicle.getFuelType());
     }
+
+    @PostMapping("vehicle")
+    public ResponseEntity<?> addVehicle(@RequestBody Vehicle vehicle) {
+        return vehicleService.addVehicle(vehicle);
+    }
 }

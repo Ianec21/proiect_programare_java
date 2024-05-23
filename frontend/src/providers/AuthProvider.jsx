@@ -58,6 +58,7 @@ export const AuthProvider = ({ children, initialData }) => {
     await axios.post("http://localhost:8081/users/sign-up", data).then(res => {
       setUser({ id:res.data.id, name: res.data.name, email: res.data.email, role: res.data.role });
       setError("");
+      navigate("/");
     }).catch(err => {
       setError(err.response.data);
     });
@@ -68,7 +69,7 @@ export const AuthProvider = ({ children, initialData }) => {
   const logOut = () => {
     localStorage.clear();
     setUser(null);
-    navigate("/sign-in");
+    navigate("/sign-in?message=You have been logged out");
   }
 
   return (
