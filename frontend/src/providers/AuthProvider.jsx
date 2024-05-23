@@ -65,8 +65,14 @@ export const AuthProvider = ({ children, initialData }) => {
     setLoading(false);
   }
 
+  const logOut = () => {
+    localStorage.clear();
+    setUser(null);
+    navigate("/sign-in");
+  }
+
   return (
-    <AuthContext.Provider value={{ user, error, signIn, signUp }}>
+    <AuthContext.Provider value={{ user, error, signIn, signUp, logOut }}>
       { children }
     </AuthContext.Provider>
   )

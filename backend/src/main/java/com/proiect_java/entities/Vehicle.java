@@ -14,16 +14,16 @@ import lombok.Setter;
 @Table(name="vehicles")
 public class Vehicle {
     @Id
-    private String TextPlate;
-    private int Creator;
-    private String Brand;
-    private String Model;
-    private int Year;
-    private String Color;
-    private double EngineSize;
-    private String FuelType;
-    private double Torque;
-    private double TrunkVolume;
-    private double Price;
-    private double Power;
+    private String textPlate;  // Ensure this is in camelCase
+    private int creator;
+    private String brand;      // Ensure this is in camelCase
+    private String model;
+    private int year;
+    private String color;      // Ensure this is in camelCase
+    private double engineSize;
+    private String fuelType;   // Ensure this is in camelCase
+    private double torque;
+    private double trunkVolume;
+    private double price;
+    private double power;
 }

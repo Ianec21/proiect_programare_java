@@ -1,7 +1,10 @@
+import Input from "./Input.jsx";
+import Button from "./Button.jsx";
+
 const VehiclesList = ({ data }) => {
   return (
     <div className="w-full h-auto">
-      <table className="table-fixed w-full border-2 border-orange-500">
+      <table className="table-fixed w-full border-2 border-slate-500">
         <thead className="h-[100px]">
           <tr className="text-center">
             <th>Numar inmatriculare</th>
@@ -17,7 +20,7 @@ const VehiclesList = ({ data }) => {
             <th>Pret</th>
           </tr>
         </thead>
-        <tbody className="text-center border-2 border-orange-500">
+        <tbody className="text-center border-2 border-slate-500">
         {data.map((vehicle) =>
           <tr key={`vehicle_${vehicle.textPlate}`} className="h-[100px]">
             <td>{vehicle.textPlate}</td>
