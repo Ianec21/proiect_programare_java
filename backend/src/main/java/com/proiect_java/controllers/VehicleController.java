@@ -29,4 +29,9 @@ public class VehicleController {
     public ResponseEntity<?> addVehicle(@RequestBody Vehicle vehicle) {
         return vehicleService.addVehicle(vehicle);
     }
+
+    @PostMapping("vehicle/update")
+    public ResponseEntity<?> updateVehicle(@RequestBody Vehicle vehicle) {
+        return vehicleService.updateVehicle(vehicle);
+    }
 }

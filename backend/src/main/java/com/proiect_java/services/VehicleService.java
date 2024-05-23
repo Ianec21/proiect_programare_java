@@ -102,4 +102,18 @@ public class VehicleService {
 
         return ResponseEntity.ok().body(vehicleRepository.save(vehicle));
     }
+
+    public ResponseEntity<?> updateVehicle(@RequestBody Vehicle vehicle) {
+        if(vehicle.getTextPlate().isEmpty()) {
+            return ResponseEntity.badRequest().body("Introduceti un numar de inmatriculare.");
+        }
+
+        Vehicle foundVehicle = vehicleRepository.findByTextPlate(vehicle.getTextPlate());
+        if(foundVehicle == null){
+            foundVehicle = vehicle;
+            return ResponseEntity.ok().body(foundVehicle);
+        }
+
+        return ResponseEntity.badRequest().body("Nu a fost gasita masina selectata.");
+    }
 }

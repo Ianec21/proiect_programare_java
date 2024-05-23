@@ -67,10 +67,6 @@ export const AdminPage = () => {
     setError(error);
   }
 
-  const updateData = () => {
-    
-  }
-
   return (
     <div className="p-10">
       {vehicles && vehicles.length > 0 && <VehiclesList data={vehicles}/>}
