@@ -1,1 +1,0 @@
-insert into vehicles (text_plate, creator, brand, model, year, color, engine_size, fuel_type, torque, trunk_volume, price, power) values ("IAN110", 1, "Volkswagen", "Golf Mk3", 1994, "Gri", 1400, "benzina", 120, 100, 1500, 60);

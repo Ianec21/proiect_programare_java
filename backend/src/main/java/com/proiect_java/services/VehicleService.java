@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Service
@@ -95,12 +96,32 @@ public class VehicleService {
         }
 
         Vehicle foundVehicle = vehicleRepository.findByTextPlate(vehicle.getTextPlate());
-        if(foundVehicle == null){
+        if(foundVehicle != null){
             foundVehicle = vehicle;
             return ResponseEntity.ok().body(foundVehicle);
         }
 
-        return ResponseEntity.ok().body(vehicleRepository.save(vehicle));
+        Vehicle savedVehicle = vehicleRepository.save(vehicle);
+
+        return ResponseEntity.ok().body(savedVehicle);
+    }
+
+    // functie pentru actualizarea campurilor care nu sunt goale!
+    private void copyNonNullProperties(Vehicle source, Vehicle target) {
+        Field[] fields = source.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(source);
+                if (value != null) {
+                    Field targetField = target.getClass().getDeclaredField(field.getName());
+                    targetField.setAccessible(true);
+                    targetField.set(target, value);
+                }
+            } catch (IllegalAccessException | NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public ResponseEntity<?> updateVehicle(@RequestBody Vehicle vehicle) {
@@ -109,11 +130,53 @@ public class VehicleService {
         }
 
         Vehicle foundVehicle = vehicleRepository.findByTextPlate(vehicle.getTextPlate());
-        if(foundVehicle == null){
-            foundVehicle = vehicle;
+
+        if(foundVehicle != null){
+            System.out.println(foundVehicle);
+
+            foundVehicle.setBrand(vehicle.getBrand());
+            foundVehicle.setColor(vehicle.getColor());
+            foundVehicle.setFuelType(vehicle.getFuelType());
+            foundVehicle.setYear(vehicle.getYear());
+            foundVehicle.setEngineSize(vehicle.getEngineSize());
+            foundVehicle.setTorque(vehicle.getTorque());
+            foundVehicle.setTrunkVolume(vehicle.getTrunkVolume());
+            foundVehicle.setPrice(vehicle.getPrice());
+            foundVehicle.setPower(vehicle.getPower());
+            foundVehicle.setModel(vehicle.getModel());
+
+            vehicleRepository.save(foundVehicle);
             return ResponseEntity.ok().body(foundVehicle);
         }
 
         return ResponseEntity.badRequest().body("Nu a fost gasita masina selectata.");
+    }
+
+    public ResponseEntity<?> deleteVehicle(String textPlate) {
+        if(!textPlate.isEmpty()){
+            System.out.println(textPlate);
+            Vehicle foundVehicle = vehicleRepository.findByTextPlate(textPlate);
+            if(foundVehicle == null){
+                return ResponseEntity.badRequest().body("Nu a fost gasita masina selectata.");
+            } else {
+                vehicleRepository.delete(foundVehicle);
+                return ResponseEntity.ok().body("Masina selectat a fost stearsa cu succes!");
+            }
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<?> getVehicle(String textPlate) {
+        if(!textPlate.isEmpty()){
+            Vehicle foundVehicle = vehicleRepository.findByTextPlate(textPlate);
+            if(foundVehicle == null){
+                return ResponseEntity.badRequest().body("Nu a fost gasita masina selectata.");
+            } else {
+                return ResponseEntity.ok().body(foundVehicle);
+            }
+        }
+
+        return ResponseEntity.ok().build();
     }
 }

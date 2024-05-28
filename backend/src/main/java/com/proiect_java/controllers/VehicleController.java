@@ -5,10 +5,7 @@ import com.proiect_java.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +30,16 @@ public class VehicleController {
     @PostMapping("vehicle/update")
     public ResponseEntity<?> updateVehicle(@RequestBody Vehicle vehicle) {
         return vehicleService.updateVehicle(vehicle);
+    }
+
+    @DeleteMapping("vehicle/{textPlate}")
+    public ResponseEntity<?> deleteVehicle(@PathVariable String textPlate) {
+        System.out.println(textPlate);
+        return vehicleService.deleteVehicle(textPlate);
+    }
+
+    @GetMapping("vehicle/{textPlate}")
+    public ResponseEntity<?> getVehicle(@PathVariable String textPlate) {
+        return vehicleService.getVehicle(textPlate);
     }
 }
