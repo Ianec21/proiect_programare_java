@@ -12,7 +12,7 @@ export const AdminPage = () => {
   const [errorMessage, setError] = useState();
   
   useEffect(() => {
-    if(user.role != "ROLE_EDITOR"){
+    if(user.role == "ROLE_USER"){
       return navigate("/");
     }
 

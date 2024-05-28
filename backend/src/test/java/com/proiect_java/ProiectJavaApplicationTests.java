@@ -1,13 +1,30 @@
 package com.proiect_java;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class ProiectJavaApplicationTests {
+	@Autowired
+	private MockMvc mockMvc;
 
 	@Test
-	void contextLoads() {
+	public void testGetVehicleByTextPlate() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/vehicle/{textPlate}", "IAN110"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json"));
 	}
 
+	@Test
+	public void testGetUserById() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/user/{userID}", 1))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+	}
 }

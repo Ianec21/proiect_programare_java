@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -21,8 +22,17 @@ public class UserService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok().body(userRepository.findAll());
+    }
+
+    public ResponseEntity<?> getUser(int userID) {
+        Optional<User> foundUser = userRepository.findById(userID);
+
+        if(foundUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilizatorul nu a fost gasit.");
+        }
+        return ResponseEntity.ok().body(foundUser.get());
     }
 
     public ResponseEntity<?> signUp(User user) {
@@ -47,5 +57,32 @@ public class UserService {
         if(passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
             return ResponseEntity.ok().body(existingUser);
         } else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Parola incorecta.");
+    }
+
+    public ResponseEntity<?> updateUser(User user) {
+        Optional<User> foundUser = userRepository.findById(user.getId());
+
+        if(foundUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilizatorul nu a fost gasit.");
+        }
+
+        foundUser.get().setEmail(user.getEmail());
+        foundUser.get().setName(user.getName());
+        foundUser.get().setRole(user.getRole());
+
+        User savedUser = userRepository.save(foundUser.get());
+
+        return ResponseEntity.ok().body(savedUser);
+    }
+
+    public ResponseEntity<?> deleteUser(int userID) {
+        Optional<User> foundUser = userRepository.findById(userID);
+        if(foundUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilizatorul nu a fost gasit.");
+        }
+
+        userRepository.delete(foundUser.get());
+
+        return ResponseEntity.ok().build();
     }
 }

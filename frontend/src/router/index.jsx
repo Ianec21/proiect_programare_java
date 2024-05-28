@@ -6,6 +6,8 @@ import SignUpPage from "../pages/SignUpPage/index.jsx";
 import AdminPage from "../pages/AdminPage/index.jsx";
 import { NewVehiclePage } from "../pages/AdminPage/NewVehicle/index.jsx";
 import EditVehiclePage from "../pages/AdminPage/EditVehicle/index.jsx";
+import UsersPage from "../pages/AdminPage/Users/index.jsx";
+import EditUserPage from "../pages/AdminPage/Users/EditUser/index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: "/admin/edit/:plateText",
         element: <EditVehiclePage/>
+      },
+      {
+        path: "/admin/users",
+        element: <UsersPage/>
+      },
+      {
+        path: "/admin/users/edit/:id",
+        element: <EditUserPage/>
       },
     ]
   }

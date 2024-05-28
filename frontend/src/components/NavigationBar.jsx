@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {useAuth} from "../providers/AuthProvider.jsx";
-import {FaHome, FaUser} from "react-icons/fa";
+import {FaCar, FaHome, FaUser} from "react-icons/fa";
 import LogoutButton from "./LogoutButton.jsx";
 
 export const NavigationBar = props => {
@@ -14,8 +14,14 @@ export const NavigationBar = props => {
           <div className="flex flex-row gap-3 items-center">
             <Link to={"/"} className="flex items-center gap-2"><FaHome/>Acasa</Link>
             {
-              user.role === "ROLE_EDITOR" && <>
-                <Link to={"/admin"} className="flex items-center gap-2"><FaUser/>Admin</Link>
+              user.role !== "ROLE_USER" && <>
+                <Link to={"/admin"} className="flex items-center gap-2"><FaCar/>Management Vehicule</Link>
+              </>
+            }
+
+            {
+              user.role !== "ROLE_USER" && <>
+                <Link to={"/admin/users"} className="flex items-center gap-2"><FaUser/>Management Utilizatori</Link>
               </>
             }
           </div>

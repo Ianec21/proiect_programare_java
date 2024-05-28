@@ -4,10 +4,7 @@ import com.proiect_java.entities.User;
 import com.proiect_java.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -15,8 +12,8 @@ public class UserController {
     UserService userService;
 
     @GetMapping("users")
-    public String getUsers(){
-        return "Users";
+    public ResponseEntity<?> getUsers(){
+        return  userService.getAllUsers();
     }
 
     @PostMapping("/users/sign-up")
@@ -27,5 +24,20 @@ public class UserController {
     @PostMapping("/users/sign-in")
     public ResponseEntity<?> signIn(@RequestBody User user){
         return userService.signIn(user);
+    }
+
+    @GetMapping("/user/{userID}")
+    public ResponseEntity<?> getUser(@PathVariable("userID") int userID){
+        return userService.getUser(userID);
+    }
+
+    @PostMapping("/user/update")
+    public ResponseEntity<?> updateUser(@RequestBody User user){
+        return userService.updateUser(user);
+    }
+
+    @DeleteMapping("/user/{userID}")
+    public ResponseEntity<?> deleteUser(@PathVariable("userID") int userID){
+        return userService.deleteUser(userID);
     }
 }

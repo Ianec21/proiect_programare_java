@@ -28,7 +28,7 @@ const SignUpPage = () => {
         })} label="Nume" placeholder="Nume Prenume"/>
         <Input onChange={(e) => setData(prev => {
           return { ...prev, password: e.target.value}
-        })} label="Parola" placeholder="Parola"/>
+        })} label="Parola" placeholder="Parola" type="password"/>
         {error && error.length > 0 && <p className="text-center text-red-500">{error}</p>}
         <Button onClick={handleSignUp} type="button">Inregistrare</Button>
         <Button type="button" onClick={() => navigate("/sign-in")} className="bg-transparent hover:bg-slate-700">Inapoi</Button>

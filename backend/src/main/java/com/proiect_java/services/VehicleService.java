@@ -106,24 +106,6 @@ public class VehicleService {
         return ResponseEntity.ok().body(savedVehicle);
     }
 
-    // functie pentru actualizarea campurilor care nu sunt goale!
-    private void copyNonNullProperties(Vehicle source, Vehicle target) {
-        Field[] fields = source.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(source);
-                if (value != null) {
-                    Field targetField = target.getClass().getDeclaredField(field.getName());
-                    targetField.setAccessible(true);
-                    targetField.set(target, value);
-                }
-            } catch (IllegalAccessException | NoSuchFieldException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public ResponseEntity<?> updateVehicle(@RequestBody Vehicle vehicle) {
         if(vehicle.getTextPlate().isEmpty()) {
             return ResponseEntity.badRequest().body("Introduceti un numar de inmatriculare.");
