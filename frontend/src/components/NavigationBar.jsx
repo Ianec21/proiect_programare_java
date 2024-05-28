@@ -14,7 +14,7 @@ export const NavigationBar = props => {
           <div className="flex flex-row gap-3 items-center">
             <Link to={"/"} className="flex items-center gap-2"><FaHome/>Acasa</Link>
             {
-              user.role === "ROLE_ADMIN" && <>
+              user.role === "ROLE_EDITOR" && <>
                 <Link to={"/admin"} className="flex items-center gap-2"><FaUser/>Admin</Link>
               </>
             }

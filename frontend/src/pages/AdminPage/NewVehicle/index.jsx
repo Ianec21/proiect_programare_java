@@ -26,7 +26,7 @@ export const NewVehiclePage = () => {
   })
 
   useEffect(() => {
-    if(user.role != "ROLE_ADMIN"){
+    if(user.role != "ROLE_EDITOR"){
       return navigate("/");
     }
   }, []);
